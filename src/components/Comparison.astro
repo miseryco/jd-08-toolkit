@@ -1,0 +1,61 @@
+---
+import data from '../../content/competitors.json';
+import { niceDate, sitePath } from '../lib/site';
+interface Feature { feature: string; cells: Partial<Record<string, string>> }
+const groups: { name: string; rows: Feature[] }[] = data.groups;
+const alternatives = data.tools.filter(tool => tool.id !== 'toolkit');
+---
+<section class="comparison" id="comparison" aria-label="JD-08 feature comparison">
+  <div class="comparison-options">
+    <p id="comparison-key">A dash means the tool’s JD-08 documentation doesn’t list that feature.</p>
+    <label class="compare-picker" hidden>Compare Toolkit with
+      <select>{alternatives.map(tool => <option value={tool.id}>{tool.name}</option>)}
+        <option value="all">All five tools</option>
+      </select>
+    </label>
+  </div>
+  <div class="table-scroll" role="region" tabindex="0" aria-label="JD-08 features by tool">
+    <table aria-describedby="comparison-key">
+      <caption class="visually-hidden">Features of JD-08 Toolkit and five other JD-08 tools</caption>
+      <thead><tr>
+        <th class="feature-label" scope="col">Feature</th>
+        {data.tools.map(tool => <th scope="col" data-tool={tool.id}>
+          {tool.id === 'manager' ? <>JD08<wbr />Patch<wbr />Manager</> : tool.name}
+        </th>)}
+      </tr></thead>
+      {groups.map(group => <tbody>
+        <tr class="group-row"><th scope="rowgroup" colspan={data.tools.length + 1}>{group.name}</th></tr>
+        {group.rows.map(row => <tr>
+          <th scope="row">{row.feature}</th>
+          {data.tools.map(tool => <td data-tool={tool.id}>
+            {row.cells[tool.id] ?? <><span class="dash" aria-hidden="true">—</span><span class="visually-hidden">Not documented</span></>}
+          </td>)}
+        </tr>)}
+      </tbody>)}
+    </table>
+  </div>
+  <details class="source-notes"><summary>Sources · checked <time datetime={data.verified}>{niceDate(data.verified)}</time></summary><ul>
+    {data.tools.map(tool => <li><strong>{tool.name}.</strong> {tool.sources.map((source, i) => <>{i > 0 && ' · '}<a href={source.url.startsWith('https://') ? source.url : sitePath(source.url)}>{source.label}</a></>)}</li>)}
+  </ul></details>
+</section>
+<script>
+  const comparison = document.querySelector<HTMLElement>('.comparison')!;
+  const picker = comparison.querySelector<HTMLLabelElement>('.compare-picker')!;
+  const select = picker.querySelector('select')!;
+  const cells = comparison.querySelectorAll<HTMLTableCellElement>('[data-tool]');
+  const groups = comparison.querySelectorAll<HTMLTableCellElement>('[scope="rowgroup"]');
+  const compact = window.matchMedia('(max-width: 64rem)');
+  const columnCount = comparison.querySelectorAll('thead th').length;
+  function showTools() {
+    const paired = compact.matches && select.value !== 'all';
+    picker.hidden = !compact.matches;
+    comparison.classList.toggle('paired', paired);
+    for (const cell of cells) {
+      cell.hidden = paired && cell.dataset.tool !== 'toolkit' && cell.dataset.tool !== select.value;
+    }
+    for (const group of groups) group.colSpan = paired ? 3 : columnCount;
+  }
+  showTools();
+  select.addEventListener('change', showTools);
+  compact.addEventListener('change', showTools);
+</script>

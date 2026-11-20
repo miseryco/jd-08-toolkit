@@ -1,0 +1,110 @@
+---
+import { media } from '../lib/site';
+import screenshots from '../../content/screenshots.json';
+import Icon from './Icon.astro';
+interface Props { file: string; alt: string; sizes: string; eager?: boolean; priority?: boolean; id?: string }
+const { file, alt, sizes, eager = false, priority = false, id = file.replace(/\.webp$/, '') } = Astro.props;
+const info = screenshots[file as keyof typeof screenshots];
+if (!info) throw new Error('Missing screenshot caption for ' + file);
+const full = file.endsWith('-1600.webp');
+const width = full ? 1600 : 960;
+const height = full ? 1154 : 540;
+const smallWidth = width / 2;
+const small = file.replace('-' + width + '.webp', '-' + smallWidth + '.webp');
+const viewerId = 'view-' + id;
+const triggerId = 'show-' + id;
+---
+<div class="screenshot">
+  <a id={triggerId} class="screen-trigger" href={'#' + viewerId} aria-controls={viewerId} aria-haspopup="dialog" aria-label={'Enlarge screenshot. ' + info.title}>
+    <img src={media(small)} srcset={media(small) + ' ' + smallWidth + 'w, ' + media(file) + ' ' + width + 'w'}
+      {sizes} {width} {height} {alt} loading={eager || priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" />
+    <span class="enlarge-mark"><Icon name="enlarge" size={17} /></span>
+  </a>
+  <dialog id={viewerId} class="screen-viewer" aria-labelledby={viewerId + '-title'} aria-describedby={viewerId + '-caption'} style={'--image-width:' + width + 'px'}>
+    <div class="viewer-panel">
+      <div class="viewer-bar">
+        <h2 id={viewerId + '-title'}>{info.title}</h2>
+        <button class="viewer-zoom" type="button" aria-pressed="false" hidden>Zoom in</button>
+        <a class="viewer-close" href={'#' + triggerId} aria-label="Close screenshot">Close</a>
+      </div>
+      <div class="viewer-stage" role="region" aria-label={info.title}>
+        <img src={media(file)} {width} {height} {alt} loading="lazy" />
+      </div>
+      <p id={viewerId + '-caption'}>{info.caption}</p>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  for (const shot of document.querySelectorAll<HTMLElement>('.screenshot')) {
+    const trigger = shot.querySelector<HTMLAnchorElement>('.screen-trigger')!;
+    const viewer = shot.querySelector('dialog')!;
+    const close = viewer.querySelector<HTMLAnchorElement>('.viewer-close')!;
+    const zoom = viewer.querySelector<HTMLButtonElement>('.viewer-zoom')!;
+    const stage = viewer.querySelector<HTMLElement>('.viewer-stage')!;
+    const fullImage = stage.querySelector('img')!;
+    if (typeof viewer.showModal !== 'function') continue;
+
+    function setZoom(enlarged: boolean) {
+      stage.classList.toggle('enlarged', enlarged);
+      stage.tabIndex = enlarged ? 0 : -1;
+      zoom.setAttribute('aria-pressed', String(enlarged));
+      zoom.textContent = enlarged ? 'Fit image' : 'Zoom in';
+      stage.scrollTo(0, 0);
+    }
+    function updateZoomControl() {
+      if (viewer.open && !stage.classList.contains('enlarged')) {
+        zoom.hidden = fullImage.getBoundingClientRect().width >= Number(fullImage.getAttribute('width')) - 1;
+      }
+    }
+    trigger.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      viewer.showModal();
+      close.focus({ preventScroll: true });
+      updateZoomControl();
+    });
+    close.addEventListener('click', event => {
+      if (!viewer.open) return;
+      event.preventDefault();
+      viewer.close();
+    });
+    viewer.addEventListener('click', event => { if (event.target === viewer) viewer.close(); });
+    viewer.addEventListener('close', () => {
+      setZoom(false);
+      trigger.focus({ preventScroll: true });
+    });
+    zoom.addEventListener('click', () => setZoom(!stage.classList.contains('enlarged')));
+    new ResizeObserver(updateZoomControl).observe(stage);
+  }
+</script>
+
+<style>
+  .screenshot { min-width: 0; }
+  .screen-trigger { position: relative; display: block; width: 100%; cursor: zoom-in; }
+  .screen-trigger img { width: 100%; }
+  .enlarge-mark { position: absolute; right: .5rem; bottom: .5rem; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; color: var(--panel-print); background: var(--panel-well); border: 1px solid var(--panel-edge); }
+  @media (hover: hover) {
+    .enlarge-mark { opacity: 0; }
+    .screen-trigger:is(:hover, :focus-visible) .enlarge-mark { opacity: 1; }
+  }
+  .screen-viewer { --stage-height: min(79dvh, calc(100dvh - 8.5rem)); position: fixed; inset: 0; width: min(var(--image-width), 72rem, calc(100% - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 1px solid var(--panel-edge); background: var(--panel-well); color: var(--panel-print); overscroll-behavior: contain; }
+  .screen-viewer::backdrop { background: rgb(8 10 8 / .88); }
+  /* An ordinary fragment link still opens the captioned figure without JavaScript. */
+  .screen-viewer:target:not([open]) { display: block; z-index: 10; box-shadow: 0 0 0 100vmax rgb(8 10 8 / .88); }
+  :global(html:has(.screen-viewer[open])) { overflow: hidden; }
+  .viewer-bar { display: flex; align-items: center; gap: .75rem; padding: .25rem clamp(.75rem, 2vw, 1.35rem); }
+  .viewer-bar h2 { flex: 1; font-size: clamp(1.15rem, 2vw, 1.7rem); line-height: 1.1; }
+  .viewer-bar a, .viewer-bar button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0 .25rem; border: 0; background: transparent; color: var(--panel-amber); font: inherit; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .viewer-bar :is(a, button):hover { color: var(--panel-print); text-decoration: underline; }
+  .viewer-stage { max-height: var(--stage-height); overflow: auto; overscroll-behavior: contain; background: var(--panel-display); }
+  .viewer-stage img { display: block; width: auto; height: auto; max-width: 100%; max-height: var(--stage-height); margin-inline: auto; border-radius: 0; }
+  .viewer-stage.enlarged img { width: var(--image-width); max-width: none; max-height: none; }
+  .viewer-stage:focus-visible { outline: 2px solid var(--panel-amber); outline-offset: -2px; }
+  .viewer-panel p { max-width: 72ch; margin: 0; padding: .85rem clamp(.75rem, 2vw, 1.35rem) 1.1rem; font-size: 1rem; line-height: 1.5; }
+  @media (max-width: 560px) {
+    .screen-viewer { width: calc(100% - 1rem); }
+    .viewer-bar { gap: .5rem; }
+    .viewer-bar a, .viewer-bar button { font-size: .9rem; }
+  }
+</style>

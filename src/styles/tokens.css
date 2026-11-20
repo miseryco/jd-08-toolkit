@@ -1,0 +1,23 @@
+/* From Theme.swift: panel inks, LED colors, system text and control geometry. */
+:root {
+  --panel: #53544f;
+  --panel-bar: #252723;
+  --panel-print: #f2f1e7;
+  --panel-secondary: #d8d7cd;
+  --panel-amber: #ffba78;
+  --panel-control: #292b28;
+  --panel-well: #181a17;
+  --panel-shallow-seam: #43443f;
+  --panel-edge: #85867b;
+  --panel-led: #ff683d;
+  --panel-warning-print: #ffcfb5;
+  --panel-led-off: #88918a;
+  --panel-display: #1b1d1a;
+  --display-red: #ff2936;
+  --display-background: #191716;
+  --system-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --readout-font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --control-radius: 3px;
+  --control-gap: 6px;
+  --panel-seam: 1.5px;
+}

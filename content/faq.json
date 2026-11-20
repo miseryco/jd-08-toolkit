@@ -1,0 +1,26 @@
+[
+	{
+		"q": "What do I need?",
+		"a": [
+			"A JD-08 and an Apple silicon or Intel Mac running macOS 13 or later. For live editing and USB audio, install ",
+			{ "text": "Roland’s JD-08 driver", "href": "https://www.roland.com/global/support/by_product/jd-08/updates_drivers/" },
+			"."
+		]
+	},
+	{
+		"q": "Can I edit without the synth?",
+		"a": "Yes. Open, edit and save patches, patterns and sets on your Mac. Connect the JD-08 to hear a new sound or write it to the instrument."
+	},
+	{
+		"q": "Which Roland files can I open?",
+		"a": [
+			"Open JD-08 backups (.svd) and supported JD-800 Model Expansion patches and banks (.svz). Classic JD-800 and JD-990 SysEx dumps can be converted using ",
+			{ "text": "JDTools", "href": "https://github.com/sagamusix/JDTools" },
+			"."
+		]
+	},
+	{
+		"q": "Which edits sync with the JD-08?",
+		"a": "On a live part, panel edits appear in Toolkit and editor changes go to the synth. Toolkit also reads the current pattern, and hidden controls like the modulation matrix and unison voice settings."
+	}
+]

@@ -1,0 +1,15 @@
+---
+import type { Question } from '../lib/site';
+import Icon from './Icon.astro';
+interface Props { items: Question[]; title?: string }
+const { items, title = 'Common questions' } = Astro.props;
+---
+<section class="questions two-column section-rule" aria-labelledby="faq-title" id="faq">
+  <div><h2 id="faq-title">{title}</h2><slot /></div>
+  <div class="answers">{items.map(({q, a}) => (
+    <details>
+      <summary>{q}<Icon name="plus" size={19} /></summary>
+      <p>{Array.isArray(a) ? a.map(part => typeof part === 'string' ? part : <a href={part.href}>{part.text}</a>) : a}</p>
+    </details>
+  ))}</div>
+</section>

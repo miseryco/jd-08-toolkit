@@ -1,0 +1,57 @@
+---
+import Page from '../layouts/Page.astro';
+import { release, sitePath, support } from '../lib/site';
+---
+<Page title="Support — JD-08 Toolkit" description="Connect your Roland JD-08 to Toolkit, troubleshoot MIDI, audio previews and backups, or get help from Misery & Co." route="support/" social="support" socialAlt="Connection instructions from JD-08 Toolkit Help">
+  <article class="shell subpage document-page">
+    <header>
+      <h1>JD-08&nbsp;Toolkit support</h1>
+      <p>You can edit your library offline on macOS {release.minimumMacOS} or later. To read a live patch or hear the instrument through your Mac, connect your JD-08 over USB.</p>
+      <a href="#contact">Contact support</a>
+    </header>
+
+    <div class="document-sections">
+      <section>
+        <h2>Connect your JD-08</h2>
+        <ol>
+          <li>Install the <a href="https://www.roland.com/global/support/by_product/jd-08/updates_drivers/">Roland JD-08 driver for your version of macOS</a>.</li>
+          <li>Turn on the JD-08 and connect it to your Mac with a USB data cable. The Toolkit title bar should read <strong>JD-08 connected</strong>.</li>
+          <li>If Toolkit opens <strong>Set Up JD-08</strong>, follow the guide to enable <strong>Receive Exclusive</strong>. It keeps a backup of your original settings, patches and patterns.</li>
+          <li>Open <strong>Synth</strong> and select <strong>Part A</strong> in the sidebar. You should see the patch currently on that part.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>The synth isn’t responding</h2>
+        <div>
+          <p>If the JD-08 appears as a drive in Finder, eject it and restart the instrument normally to return to live MIDI. In Toolkit, open <strong>Settings → MIDI</strong> and set Input and Output to <strong>Automatic</strong>.</p>
+          <p>If Toolkit sees the JD-08 but can’t read Part A or Part B, choose <strong>Help → Set Up JD-08…</strong> to check Receive Exclusive.</p>
+        </div>
+      </section>
+      <section>
+        <h2>A live preview is silent</h2>
+        <div>
+          <p>In <strong>Settings → Audio</strong>, choose the JD-08 for input, channels <strong>1–2</strong> for its main mix, and your speakers or headphones for output.</p>
+          <p>macOS calls access to USB audio inputs “Microphone.” If you denied access, enable JD-08 Toolkit under <strong>System Settings → Privacy &amp; Security → Microphone</strong>, reopen Toolkit and try the preview again.</p>
+        </div>
+      </section>
+      <section>
+        <h2>The backup drive is missing</h2>
+        <div>
+          <p>With USB connected, turn the JD-08 off. Hold <strong>EXIT</strong> as you turn it on. The JD-08 drive takes about 20 seconds to appear in Finder. If Toolkit asks for access, choose <strong>Allow Access</strong> for that drive.</p>
+          <p><a href={sitePath('jd-08-librarian/')}>Read the guide to backups and the Memory tab</a></p>
+        </div>
+      </section>
+      <section>
+        <h2>Remove Toolkit</h2>
+        <p>To keep a copy of your patches or patterns, Control-click the library heading and choose <strong>Show in Finder</strong>, then copy the files you want to keep. Quit Toolkit and move the app from Applications to the Trash.</p>
+      </section>
+      <section id="contact">
+        <h2>Contact support</h2>
+        <div>
+          <p>Email <a href={support}>{release.contact}</a>.</p>
+          <p>Include your macOS and Toolkit versions, what you were trying to do, and the exact message you saw. For a connection issue, tell us whether Toolkit shows <strong>JD-08 connected</strong>.</p>
+        </div>
+      </section>
+    </div>
+  </article>
+</Page>

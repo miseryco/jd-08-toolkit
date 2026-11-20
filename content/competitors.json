@@ -1,0 +1,96 @@
+{
+  "verified": "2026-11-20",
+  "tools": [
+    {
+      "id": "toolkit", "name": "JD-08 Toolkit",
+      "sources": [
+        { "label": "Synth controls", "url": "#features" },
+        { "label": "Modulation matrix", "url": "changelog/#2026-11-11-modulation-matrix" },
+        { "label": "Sets and backups", "url": "jd-08-librarian/" }
+      ]
+    },
+    {
+      "id": "momo", "name": "Momo JD-08 Editor",
+      "sources": [
+        { "label": "Momo Müller’s editor demo", "url": "https://www.youtube.com/watch?v=Ac-MwAet4VQ" },
+        { "label": "JD-08 editor controls", "url": "https://jd-08andjx-08-editor.jimdofree.com/" }
+      ]
+    },
+    {
+      "id": "quest", "name": "Midi Quest",
+      "sources": [
+        { "label": "Sound Quest’s JD-08 module", "url": "https://squest.com/Products/MidiQuest13/Instruments/RolandJD-08/index.html" },
+        { "label": "JD-08 control panel", "url": "https://www.soundquest.org/Products/MidiQuest13/InstrumentGraphics/RolandJD-08/ToneA.png" },
+        { "label": "Roland’s MIDI control chart", "url": "https://static.roland.com/manuals/jd-08_reference/eng/17812001.html" },
+        { "label": "Edition comparison", "url": "https://squest.com/Products/MidiQuest13/Compare.html" }
+      ]
+    },
+    {
+      "id": "librarian", "name": "JD-08 Librarian",
+      "sources": [
+        { "label": "Constantinos Tsakiris’s feature list", "url": "https://ctsakiris.gumroad.com/l/jd08lib" }
+      ]
+    },
+    {
+      "id": "manager", "name": "JD08PatchManager",
+      "sources": [
+        { "label": "NilsKr’s README", "url": "https://github.com/NilsKr/JD08PatchManager#readme" }
+      ]
+    },
+    {
+      "id": "jdtools", "name": "JDTools",
+      "sources": [
+        { "label": "Conversion and file formats", "url": "https://github.com/sagamusix/JDTools#readme" },
+        { "label": "Releases", "url": "https://github.com/sagamusix/JDTools/releases" }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "name": "Onboard effects",
+      "rows": [
+        { "feature": "Edit Group A effects", "cells": { "toolkit": "24 controls for distortion, phaser, spectrum and enhancer" } },
+        { "feature": "Edit Group B effects", "cells": { "toolkit": "30 controls including delay sync and reverb type", "momo": "Six level controls and reverb time", "quest": "Six level controls and reverb time" } },
+        { "feature": "Bypass and reorder effects", "cells": { "toolkit": "All seven effects within their groups" } }
+      ]
+    },
+    {
+      "name": "Sound design",
+      "rows": [
+        { "feature": "Select waveforms 109–151", "cells": { "toolkit": "43 extra waves" } },
+        { "feature": "Edit the per-tone modulation matrix", "cells": { "toolkit": "Up to 16 routes per tone" } },
+        { "feature": "Set unison voices and detune", "cells": { "toolkit": "2–8 voices, adjustable detune" } },
+        { "feature": "Edit tones live", "cells": { "toolkit": "Two-way panel sync on either part", "momo": "Four tones", "quest": "CC and NRPN" } },
+        { "feature": "Copy sections between tones", "cells": { "toolkit": "Envelopes, sections or whole tones", "quest": "Block copy and swap" } }
+      ]
+    },
+    {
+      "name": "Patterns and memory",
+      "rows": [
+        { "feature": "Edit the JD-08 sequencer", "cells": { "toolkit": "Two 64-step piano-roll tracks" } },
+        { "feature": "Draw sequencer motion", "cells": { "toolkit": "Four motion lanes" } },
+        { "feature": "Arrange patches and patterns in one set", "cells": { "toolkit": "256 patch slots, 128 pattern slots" } },
+        { "feature": "Read and write individual patches on the synth", "cells": { "toolkit": "SysEx over USB, with backup and verification" } }
+      ]
+    },
+    {
+      "name": "Patch library and files",
+      "rows": [
+        { "feature": "Organize patch banks", "cells": { "toolkit": "Finder folders, tags and sets", "quest": "Searchable banks, drag and drop", "librarian": "Find, sort and move patches", "manager": "Rename and copy patches" } },
+        { "feature": "Audition saved patch audio offline", "cells": { "toolkit": "Record previews from your JD-08" } },
+        { "feature": "Choose preview phrases by tag", "cells": { "toolkit": "Assign your own patterns" } },
+        { "feature": "Read and write JD-08 backups (.svd)", "cells": { "toolkit": "Patches, patterns and system settings", "librarian": "Patch banks", "manager": "Copy between backups", "jdtools": "Convert patches in a backup" } },
+        { "feature": "Read and write .svz banks", "cells": { "toolkit": "JD-800 Model Expansion", "jdtools": "ZC1 bank conversion" } },
+        { "feature": "Convert JD-800 Cloud plug-in banks", "cells": { "librarian": "Import and export", "jdtools": "BIN conversion" } },
+        { "feature": "Import classic JD-800/990 SysEx", "cells": { "toolkit": "Convert with JDTools first", "jdtools": "Direct conversion" } }
+      ]
+    },
+    {
+      "name": "Studio setup",
+      "rows": [
+        { "feature": "Platform", "cells": { "toolkit": "macOS 13+", "momo": "macOS, Windows", "quest": "macOS, Windows", "librarian": "Windows", "manager": "Windows, Linux", "jdtools": "Windows binary or CMake build" } },
+        { "feature": "DAW plug-in", "cells": { "toolkit": "Standalone app only", "momo": "AU and VST", "quest": "AU, VST and AAX in Pro" } }
+      ]
+    }
+  ]
+}

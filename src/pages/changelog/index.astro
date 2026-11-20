@@ -1,0 +1,18 @@
+---
+import Page from '../../layouts/Page.astro';
+import ScreenImage from '../../components/ScreenImage.astro';
+import Film from '../../components/Film.astro';
+import { updates } from '../../lib/updates';
+import { niceDate, sitePath } from '../../lib/site';
+---
+<Page title="Changelog — JD-08 Toolkit" description="Dated development notes for JD-08 Toolkit, including synth editing, file exchange and hardware support." route="changelog/" social="changelog" socialAlt="The modulation matrix in JD-08 Toolkit">
+  <div class="shell subpage">
+    <div class="log-head"><h1>Changelog</h1><a href={sitePath('changelog/feed.xml')}>Atom feed</a></div>
+    {updates.map(({ id, title, date, image, alt, video, Content }) => <article id={id} class="log-entry">
+      <div class="log-words"><time class="day" datetime={date}>{niceDate(date)}</time><h2>{title}</h2><Content /></div>
+      {video
+        ? <Film {video} poster={image} label={title + ' film'} {alt} />
+        : <ScreenImage {id} file={image} {alt} sizes="(max-width: 720px) 92vw, 510px" />}
+    </article>)}
+  </div>
+</Page>

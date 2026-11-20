@@ -1,0 +1,50 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/configure-pages@v6
+      - run: npm ci
+      - name: Restore licensed webfonts
+        shell: bash
+        env:
+          FONT_ARCHIVE_PASSPHRASE: ${{ secrets.FONT_ARCHIVE_PASSPHRASE }}
+        run: |
+          printf '%s\n' "$FONT_ARCHIVE_PASSPHRASE" |
+            gpg --batch --pinentry-mode loopback --passphrase-fd 0 --decrypt src/assets/fonts/fonts.tar.gpg |
+            tar -xf - -C src/assets/fonts
+      - run: npm run check
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

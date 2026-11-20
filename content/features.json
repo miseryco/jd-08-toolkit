@@ -1,0 +1,44 @@
+[
+	{
+		"id": "memory",
+		"title": "Save and load individual patches",
+		"summary": "Toolkit uses an undocumented SysEx protocol to read and write patches over USB without booting the synth into backup mode.",
+		"alt": "Individual JD-08 patch slots laid out in the Memory tab"
+	},
+	{
+		"id": "waves",
+		"title": "43 extra waveforms",
+		"summary": "Choose from the synth’s hidden waveforms: strings, brass, grand pianos and guitars. Save and load them into any JD-08.",
+		"alt": "The wave browser open at 131, Grand mf A, with more piano waves and a nylon guitar below it"
+	},
+	{
+		"id": "tones",
+		"title": "Two-way panel editing",
+		"summary": "Move the JD-08’s faders and the editor follows. Drag a control in Toolkit and hear the change mirrored live to the synth.",
+		"alt": "The editor showing the waveform, tuning and filter settings for all four tones side by side"
+	},
+	{
+		"id": "matrix",
+		"title": "A mod matrix per tone",
+		"summary": "Use the mod lever to speed up an LFO or lengthen the filter attack. Each tone has four source slots with four destinations apiece.",
+		"alt": "Tone A’s modulation matrix with separate depths for the modulation lever, aftertouch and velocity"
+	},
+	{
+		"id": "unison",
+		"title": "Unison voices and detune",
+		"summary": "JD-08’s hardware unison control is limited to an on/off switch. Toolkit lets you choose the specific voice count and detune.",
+		"alt": "Unison switched on with Voices set to 6 and Detune set to 20"
+	},
+	{
+		"id": "patterns",
+		"title": "Two parts, 64 steps",
+		"summary": "Draw notes, velocity and motion in the JD-08’s sequencer. Save patterns alongside the patches that play them.",
+		"alt": "Part A’s notes highlighted in the piano roll, with a velocity lane below"
+	},
+	{
+		"id": "effects",
+		"title": "Both effects groups",
+		"summary": "Toolkit is the only JD-08 editor we found that lets you reorder effects and edit all 54 parameters, from distortion drive to reverb type.",
+		"alt": "Effects A with routing, distortion, spectrum and enhancer controls"
+	}
+]

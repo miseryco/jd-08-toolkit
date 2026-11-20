@@ -1,0 +1,61 @@
+---
+import { media, sitePath } from '../lib/site';
+import tyght from '../assets/fonts/hex-franklin-tyght.woff2?url';
+import '../styles/site.css';
+interface Props {
+  title: string; description: string; route?: string; social?: string; socialAlt?: string; schemas?: unknown[];
+}
+const { title, description, route = '', social = 'overview', socialAlt = 'JD-08 Toolkit on Mac', schemas = [] } = Astro.props;
+const canonical = new URL(sitePath(route), Astro.site);
+const shareImage = new URL(sitePath('social/' + social + '.png'), Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#181a17" />
+    <link rel="preload" href={tyght} as="font" type="font/woff2" crossorigin="anonymous" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={sitePath('favicon.png')} />
+    <link rel="alternate" type="application/atom+xml" title="JD-08 Toolkit updates" href={sitePath('changelog/feed.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="JD-08 Toolkit" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={shareImage} />
+    <meta name="twitter:image:alt" content={socialAlt} />
+    {schemas.map(schema => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replaceAll('<', '\\u003c')} />)}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    {route && <div class="shell subpage-home">
+      <a class="brand" href={sitePath()}>
+        <img src={media('toolkit-icon.webp')} width="32" height="32" alt="" />
+        JD-08 Toolkit
+      </a>
+    </div>}
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="footer">
+      <div class="shell foot-inner">
+        <div>
+          <a class="maker" href="https://misery.co/">Misery &amp; Co.</a>
+          <p>JD-08 Toolkit is an independent app and is not affiliated with Roland.</p>
+        </div>
+        <nav aria-label="Support and legal">
+          <a href={sitePath('changelog/')} aria-current={route === 'changelog/' ? 'page' : undefined}>Changelog</a>
+          <a href={sitePath('support/')} aria-current={route === 'support/' ? 'page' : undefined}>Support</a>
+          <a href={sitePath('privacy/')} aria-current={route === 'privacy/' ? 'page' : undefined}>Privacy</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

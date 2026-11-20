@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+import { media } from '../lib/site';
+// A looping silent film with one Play/Pause button. It plays while it is on
+// screen, unless the visitor asked for less motion or paused it. Without
+// JavaScript it keeps its poster and the browser's own controls.
+interface Props { video: string; poster: string; label: string; alt: string }
+const { video, poster, label, alt } = Astro.props;
+const playback = { controls: true, muted: true, loop: true, playsinline: true, preload: 'none', loading: 'lazy' } as const;
+---
+<div class="film" data-label={label}>
+  <video width="960" height="540" {...playback} poster={media(poster)} aria-label={alt}>
+    <source src={media(video)} type="video/mp4" />
+    <a href={media(video)}>Watch the {label}</a>
+  </video>
+  <button class="film-toggle" type="button" hidden aria-label={'Play ' + label}>
+    <Icon name="play" size={15} /><span>Play</span>
+  </button>
+</div>
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  for (const film of document.querySelectorAll<HTMLElement>('.film')) {
+    const video = film.querySelector('video')!;
+    const toggle = film.querySelector<HTMLButtonElement>('.film-toggle')!;
+    const label = film.dataset.label;
+    let visible = false;
+    let pausedByUser = false;
+    let manualPlay = false;
+    function updateLabel() {
+      const action = video.paused ? 'Play' : 'Pause';
+      toggle.querySelector('span')!.textContent = action;
+      toggle.setAttribute('aria-label', action + ' ' + label);
+      toggle.classList.toggle('is-playing', !video.paused);
+    }
+    async function syncMotion() {
+      if (!visible || document.hidden || pausedByUser || (reduced.matches && !manualPlay)) {
+        video.pause();
+        return;
+      }
+      try { await video.play(); } catch { updateLabel(); }
+    }
+    video.controls = false;
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      pausedByUser = !video.paused;
+      manualPlay = video.paused;
+      if (manualPlay) video.play().catch(updateLabel);
+      else video.pause();
+    });
+    video.addEventListener('play', updateLabel);
+    video.addEventListener('pause', updateLabel);
+    video.addEventListener('error', () => {
+      toggle.hidden = true;
+      video.controls = true;
+    });
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (!visible) manualPlay = false;
+      void syncMotion();
+    }, { threshold: 0.28 }).observe(video);
+    reduced.addEventListener('change', () => { manualPlay = false; void syncMotion(); });
+    document.addEventListener('visibilitychange', syncMotion);
+  }
+</script>
+
+<style>
+  .film { position: relative; background: var(--panel-bar); }
+  .film video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+  .film-toggle { position: absolute; right: .6rem; bottom: .6rem; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-height: 2.5rem; min-width: 4.8rem; padding: .4rem .65rem; border: 1px solid var(--panel-edge); background: var(--panel-well); font-size: .92rem; font-weight: 600; }
+  .film-toggle:focus-visible { outline-offset: -4px; }
+  .film-toggle.is-playing :global(svg) { display: none; }
+  .film-toggle.is-playing::before { content: ''; width: 4px; height: 10px; border-inline: 3px solid currentColor; }
+</style>

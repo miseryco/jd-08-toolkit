@@ -1,0 +1,39 @@
+---
+import Page from '../layouts/Page.astro';
+import Questions from '../components/Questions.astro';
+import DownloadLinks from '../components/DownloadLinks.astro';
+import ScreenImage from '../components/ScreenImage.astro';
+import Comparison from '../components/Comparison.astro';
+import guides from '../../content/guides.json';
+import { faqSchema, sitePath } from '../lib/site';
+export function getStaticPaths() {
+  return guides.map(guide => ({ params: { guide: guide.slug }, props: { guide } }));
+}
+const { guide } = Astro.props;
+const titleParts = guide.title.split(/(JD-\d+)/);
+---
+<Page title={guide.title + ' — JD-08 Toolkit'} description={guide.description} route={guide.slug + '/'} social={guide.slug} socialAlt={guide.alt} schemas={[faqSchema(guide.faqs)]}>
+  <div class="shell subpage">
+    <header class="guide-header">
+      <h1>{titleParts.map(part => part.startsWith('JD-') ? <span class="model-name">{part}</span> : part)}</h1>
+      <p>{guide.description}</p>
+    </header>
+    {guide.slug === 'alternatives' && <Comparison />}
+    <div class="guide-body">
+      <figure class="guide-figure">
+        <ScreenImage file={guide.image} alt={guide.alt} sizes="(max-width: 720px) 92vw, 520px" eager />
+      </figure>
+      <div class="prose">
+        {guide.sections.map(section => <section>
+          <h2>{section.heading}</h2>
+          {section.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+          {section.command && <pre role="region" aria-label="JDTools conversion command" tabindex="0"><code>{section.command}</code></pre>}
+        </section>)}
+        {guide.slug === 'alternatives' && <a href={sitePath('jd-800-patches-on-jd-08/')}>Load JD-800 patches on a JD-08</a>}
+        {guide.sources.length > 0 && <div class="sources">{guide.sources.map(source => <a href={source.url}>{source.label}</a>)}</div>}
+      </div>
+    </div>
+    <Questions items={guide.faqs} title="Common questions" />
+    <section class="guide-cta"><h2>Get JD-08 Toolkit</h2><DownloadLinks /></section>
+  </div>
+</Page>

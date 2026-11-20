@@ -1,0 +1,67 @@
+---
+import Page from '../layouts/Page.astro';
+import DownloadLinks from '../components/DownloadLinks.astro';
+import WorkflowTour from '../components/WorkflowTour.astro';
+import ScreenImage from '../components/ScreenImage.astro';
+import Questions from '../components/Questions.astro';
+import Icon from '../components/Icon.astro';
+import { faqSchema, media, release, sitePath } from '../lib/site';
+import guides from '../../content/guides.json';
+import features from '../../content/features.json';
+import questions from '../../content/faq.json';
+import '../styles/landing.css';
+const title = 'JD-08 Toolkit — Roland JD-08 editor and librarian for Mac';
+const description = 'A comprehensive Mac editor and librarian for the Roland JD-08. Transfer individual patches over USB, edit from the panel or your Mac, and unlock extra settings and waveforms.';
+const application = {
+  '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'JD-08 Toolkit',
+  url: new URL(sitePath(), Astro.site).href, operatingSystem: 'macOS ' + release.minimumMacOS + ' or later',
+  applicationCategory: 'MusicApplication', description, softwareVersion: release.version,
+  author: { '@type': 'Organization', name: 'Misery & Co.', url: 'https://misery.co/' },
+  screenshot: new URL(media('hero-1600.webp'), Astro.site).href,
+  featureList: features.map(feature => feature.title),
+  ...(release.price != null && release.currency ? { offers: { '@type': 'Offer', price: release.price, priceCurrency: release.currency } } : {}),
+};
+---
+<Page {title} {description} schemas={[application, faqSchema(questions)]} socialAlt="The patch editor and library in JD-08 Toolkit">
+  <div class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-type">
+        <h1 id="hero-title"><span>JD-08</span> Toolkit</h1>
+        <p class="hero-deck">A comprehensive Mac editor and librarian that unlocks hidden features in the <span class="model-name">Roland JD-08</span>, including 43 extra waveforms.</p>
+        <DownloadLinks />
+      </div>
+      <ScreenImage file="hero-1600.webp" sizes="(max-width: 760px) 94vw, (max-width: 1400px) 58vw, 800px"
+        alt="The Mac editor showing the patch library, four tone selectors and a filter envelope" priority />
+    </section>
+
+    <section class="detail-strip section-rule" id="features" aria-label="Inside JD-08 Toolkit">
+      {features.map((item, index) => <figure>
+        <figcaption><h2>{item.title}</h2><p>{item.summary}</p></figcaption>
+        <ScreenImage file={'feature-' + item.id + '-960.webp'}
+          sizes={index < 3 ? '(max-width: 560px) 92vw, (max-width: 850px) 45vw, (max-width: 1400px) 30vw, 410px' : '(max-width: 560px) 92vw, (max-width: 1080px) 45vw, (max-width: 1400px) 22vw, 300px'}
+          alt={item.alt} />
+      </figure>)}
+    </section>
+
+    <WorkflowTour />
+
+    <div class="reference-columns" id="compatibility">
+      <Questions items={questions} title="Compatibility" />
+      <section id="guides" class="guide-index" aria-labelledby="guides-title">
+        <h2 id="guides-title">Guides</h2>
+        <div class="guide-links">
+          <a href={sitePath('support/')}>Connect your JD-08<Icon name="arrow" size={18} /></a>
+          {guides.map(guide => <a href={sitePath(guide.slug + '/')}>{guide.linkTitle}<Icon name="arrow" size={18} /></a>)}
+        </div>
+      </section>
+    </div>
+
+    <section class="availability" id="availability" aria-labelledby="availability-title">
+      <div>
+        <h2 id="availability-title">Buy JD-08 Toolkit</h2>
+        <p>Version {release.version} · <a href={sitePath('changelog/')}>Release notes</a></p>
+      </div>
+      <DownloadLinks purchase />
+    </section>
+  </div>
+</Page>

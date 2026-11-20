@@ -1,0 +1,10 @@
+---
+import { download } from '../lib/site';
+import Icon from './Icon.astro';
+interface Props { purchase?: boolean }
+const { purchase = false } = Astro.props;
+---
+<div class="download-links">
+  <a id={purchase ? 'buy-direct' : undefined} class="action primary" href={download.direct}><Icon name="download" />Buy direct</a>
+  <a id={purchase ? 'mac-app-store' : undefined} class="action secondary" href={download.store}><Icon name="store" />Mac App Store</a>
+</div>

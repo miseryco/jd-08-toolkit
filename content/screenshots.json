@@ -1,0 +1,42 @@
+{
+  "hero-1600.webp": {
+    "title": "The Synth editor",
+    "caption": "Choose a patch from the library on the left. Tone A’s filter envelope is open on the right. Drag its points to set how the filter opens when you play a note and closes when you release it."
+  },
+  "feature-waves-960.webp": {
+    "title": "The waveform browser",
+    "caption": "Wave 131, Grand mf A, is selected. These piano and nylon guitar waves sit beyond the 108 on the front panel. Search by name or number and listen as you move through the list."
+  },
+  "feature-matrix-960.webp": {
+    "title": "Tone A’s modulation matrix",
+    "caption": "Follow the Aftertouch column. Pressing harder bends the pitch down and opens the filter. Drag either depth through zero to reverse its direction. Save the patch from Toolkit to keep the routing."
+  },
+  "feature-memory-960.webp": {
+    "title": "Patch slots in a set",
+    "caption": "Each tile represents one patch slot. On the JD-08 Memory page, choose Save to Library to read a single slot into a file. To write a patch back, drag it onto the destination slot and choose Save to JD-08."
+  },
+  "feature-tones-960.webp": {
+    "title": "Four tones side by side",
+    "caption": "Each column shows one tone’s settings. With a live part open, panel changes appear here and you can undo them on the Mac. Use a section’s menu to copy its settings to another tone."
+  },
+  "feature-unison-960.webp": {
+    "title": "Unison in Advanced Engine",
+    "caption": "Here, six voices play each note with Detune set to 20. Turn Detune down to bring their pitches closer together, or raise it to hear them beat against one another."
+  },
+  "feature-patterns-960.webp": {
+    "title": "The two-part piano roll",
+    "caption": "The amber notes belong to the selected part. Drag a note’s edge to change its length and draw in the lower lane to change how hard each step plays."
+  },
+  "feature-effects-960.webp": {
+    "title": "Effects A",
+    "caption": "Set the order of the effects under Routing & output. Distortion, Spectrum and Enhancer each have their own switch. The chorus and reverb sends feed the second effects group."
+  },
+  "memory-1600.webp": {
+    "title": "The Memory tab",
+    "caption": "This set has 32 patches assigned. Drag a sound from the library into an empty tile to place it. When you write the set to the JD-08, empty slots keep what was already on the instrument."
+  },
+  "patch-1600.webp": {
+    "title": "Editing a patch file",
+    "caption": "Tone A’s Wave / Pitch page shows its waveform, coarse and fine tuning, and pitch envelope. Edits here belong to the library file until you choose to load it onto the instrument."
+  }
+}

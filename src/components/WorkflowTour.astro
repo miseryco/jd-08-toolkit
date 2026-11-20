@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+import Film from './Film.astro';
+const workflows = [
+  { id: 'synth', name: 'Synth', caption: 'Drag an envelope point to change the filter attack as you play.', alt: 'Dragging the first filter-envelope handle changes the attack time and level.' },
+  { id: 'patterns', name: 'Patterns', caption: 'Draw notes and velocity on two 64-step tracks.', alt: 'Editing the velocity of 32 steps and adding a note to the pattern.' },
+  { id: 'memory', name: 'Memory', caption: 'Arrange 256 patches and 128 patterns in a set before writing it to the JD-08.', alt: 'Dragging Blue Hour Choir from slot 11 to slot 24 swaps the two patches. A second drag returns them to their original slots.' },
+];
+---
+<section class="tour" id="workflows" aria-label="Editor demonstrations">
+  <fieldset class="tour-select">
+    <legend class="visually-hidden">Choose an editor demonstration</legend>
+    <div class="tour-console">
+      {workflows.map((view, index) => <>
+        <input class="visually-hidden tour-radio" type="radio" id={'pick-' + view.id} name="tour-view" checked={index === 0} aria-controls={'view-' + view.id} />
+        <label for={'pick-' + view.id}>{view.name}<Icon name="arrow" size={25} /></label>
+      </>)}
+      <div class="tour-views">
+        {workflows.map(view => (
+          <figure class="tour-view" data-name={view.name} id={'view-' + view.id}>
+            <Film video={'loop-' + view.id + '.mp4'} poster={'loop-' + view.id + '.webp'} label={view.name + ' demonstration'} alt={view.alt} />
+            <figcaption>{view.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </fieldset>
+</section>

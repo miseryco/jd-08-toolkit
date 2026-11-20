@@ -1,0 +1,131 @@
+[
+  {
+    "slug": "jd-08-librarian",
+    "linkTitle": "Working with JD-08 banks",
+    "title": "A JD-08 librarian for Mac",
+    "description": "Save individual JD-08 patches over USB, open .svd backups and arrange patches and patterns into sets on your Mac.",
+    "image": "memory-1600.webp",
+    "alt": "Toolkit’s Memory tab showing patch slots beside the library",
+    "sections": [
+      {
+        "heading": "Transfer a single patch",
+        "paragraphs": [
+          "Connect the synth over USB. In Memory, select JD-08 Memory, Control-click a patch slot and choose Save to Library. Toolkit reads that sound and saves it as an .svz file on your Mac.",
+          "To play the file, choose Open on JD-08 in its library menu and pick Part A or Part B. To store it on the instrument, drag it onto the patch slot you want in JD-08 Memory and choose Save to JD-08."
+        ]
+      },
+      {
+        "heading": "Open a full backup",
+        "paragraphs": [
+          "If you already have a JD-08 .svd backup, open it from the File menu. To make a fresh one, connect the JD-08 by USB, turn it off, then hold EXIT while powering it on. Wait for the JD-08 drive to appear. In Memory, choose Get Backup from JD-08. The first time, macOS asks you to grant access to that drive.",
+          "A backup is a snapshot of the instrument’s patches, patterns and system settings. Opening one adds patches and patterns to your libraries and creates a set in Memory. You can also open an individual JD-800 Model Expansion .svz patch in Synth or load a supported .svz bank into Memory."
+        ]
+      },
+      {
+        "heading": "Build a set",
+        "paragraphs": [
+          "Arrange sounds across 256 patch slots and sequences across 128 pattern slots. Drag items from the library, or drag slots to swap or duplicate them. A set follows the latest saved version of each item it references. Empty slots leave the corresponding sounds or patterns on the JD-08 in place."
+        ]
+      },
+      {
+        "heading": "Write or export",
+        "paragraphs": [
+          "For a connected JD-08, choose Copy Set to Memory Page, review the staged slots and choose Save to JD-08. Toolkit backs up the destination records and verifies the write.",
+          "Use Export Patches to share the set’s sounds as a .svz bank. Export as Backup uses an existing .svd backup to fill empty slots and creates a full backup for the JD-08’s USB restore mode."
+        ]
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Can I organize patches without the JD-08 connected?",
+        "a": "Yes. Open backups and banks, edit library files and build sets offline. Connect the JD-08 to audition through the instrument or write to its memory."
+      },
+      {
+        "q": "Does restoring a backup replace all my slots?",
+        "a": "Yes. A full .svd restore replaces the instrument’s memory when you press PAGE/TIE. Toolkit saves a recovery backup first. To change only a few slots, stage those items on JD-08 Memory and use Save to JD-08."
+      }
+    ],
+    "sources": [
+      { "label": "Roland’s JD-08 backup instructions", "url": "https://static.roland.com/manuals/jd-08_reference/eng/17812183.html" },
+      { "label": "Roland’s JD-08 restore instructions", "url": "https://static.roland.com/manuals/jd-08_reference/eng/17812038.html" }
+    ]
+  },
+  {
+    "slug": "jd-800-patches-on-jd-08",
+    "linkTitle": "JD-800 patches on a JD-08",
+    "title": "How to load JD-800 patches on a JD-08",
+    "description": "Use supported JD-800 Model Expansion .svz files or convert legacy JD-800 and JD-990 SysEx with JDTools, then audition and store patches on your JD-08.",
+    "image": "patch-1600.webp",
+    "alt": "Toolkit’s Synth tab showing the controls for a JD-08 patch",
+    "sections": [
+      {
+        "heading": "Check the file",
+        "paragraphs": [
+          "For a JD-800 Model Expansion .svz file, choose File → Open in Toolkit. A single patch opens in Synth and a bank opens as a set in Memory. Toolkit checks the model inside the file. Generic ZEN-Core .svz banks and compressed plugin containers are outside the supported format."
+        ]
+      },
+      {
+        "heading": "Convert a classic SysEx dump",
+          "command": "JDTools convert svd INPUT.syx JD08Backup.svd",
+        "paragraphs": [
+          "For an original JD-800 or JD-990 .syx file or a .mid file containing a SysEx dump, use JDTools by Johannes Schultz. Toolkit uses the Roland file layouts documented by JDTools.",
+          "Make a copy of JD08Backup.svd from your own instrument and work on that copy. Run the conversion on your copied backup with the command below. Replace INPUT.syx with the path to your dump and the final argument with the path to the copy. JDTools writes the converted patches into the copy in place. You can add a starting slot, such as B42, to choose where they go. Open the resulting .svd in Toolkit and find the converted patches in its set."
+        ]
+      },
+      {
+        "heading": "Listen before you store",
+        "paragraphs": [
+          "Select a patch in your library and choose Open on JD-08 to audition it in Part A or B. JDTools can substitute built-in waves for extended JD-990 waveforms, and it flags ROM-card waves and incompatible JD-990 structures. Check the conversion messages and play the result across the keyboard.",
+          "When you’re happy with a patch, place it on JD-08 Memory and choose Save to JD-08. A .svz file carries patch settings and waveform references. Keep a full .svd for the Roland USB restore workflow."
+        ]
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Will any .svz bank open?",
+        "a": "Toolkit accepts the supported JD-800 Model Expansion variant with 1–256 patches. The .svz extension is shared by other Roland models."
+      },
+      {
+        "q": "Will the conversion include the original samples?",
+        "a": "A patch file stores references to waves already on the instrument. Audition the converted patch on the JD-08, particularly when the original depended on ROM cards or JD-990 waveforms."
+      }
+    ],
+    "sources": [
+      { "label": "JDTools conversion documentation", "url": "https://github.com/sagamusix/JDTools#conversion" },
+      { "label": "Roland’s JD-08 restore instructions", "url": "https://static.roland.com/manuals/jd-08_reference/eng/17812038.html" }
+    ]
+  },
+  {
+    "slug": "alternatives",
+    "linkTitle": "Compare JD-08 editors",
+    "title": "JD-08 editors and librarians compared",
+    "description": "JD-08 Toolkit has 54 effects controls, 43 extra waveforms and a modulation matrix for each tone. Momo and Midi Quest offer seven Group B controls for levels and reverb time.",
+    "image": "hero-1600.webp",
+    "alt": "JD-08 Toolkit with its Synth editor and patch library open",
+    "sections": [
+      {
+        "heading": "Working with patch banks",
+        "paragraphs": [
+          "Toolkit opens a JD-08 backup as a set. Keep the patches you want, add your own patterns and write selected slots back to the instrument. Your other slots stay as they are."
+        ]
+      },
+      {
+        "heading": "Converting older sounds",
+        "paragraphs": [
+          "Toolkit opens JD-800 Model Expansion .svz files directly. For an old JD-800 or JD-990 SysEx dump, convert it with JDTools first."
+        ]
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Can I use JD-08 Toolkit in my DAW as a plug-in?",
+        "a": "Toolkit runs as a standalone macOS app. It talks to the hardware over Roland’s USB driver, and you can edit local files with the instrument disconnected."
+      },
+      {
+        "q": "Does Toolkit export a JD-08 backup?",
+        "a": "Yes. Export as Backup starts with a JD-08 .svd backup and fills it with the patches, patterns and system settings populated in your set."
+      }
+    ],
+    "sources": []
+  }
+]

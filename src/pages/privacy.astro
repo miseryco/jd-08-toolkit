@@ -1,0 +1,39 @@
+---
+import Page from '../layouts/Page.astro';
+import { support } from '../lib/site';
+---
+<Page title="Privacy policy — JD-08 Toolkit" description="How JD-08 Toolkit stores your patches, backups and audio on your Mac, and what Apple shares when you use TestFlight." route="privacy/" social="privacy" socialAlt="JD-08 Toolkit patch library">
+  <article class="shell subpage document-page">
+    <header>
+      <h1>Privacy policy</h1>
+      <p>JD-08 Toolkit works on your Mac and communicates with your instrument over MIDI. The app requires no account and includes no advertising, analytics or tracking.</p>
+      <time datetime="2026-11-19">Updated November 19, 2026</time>
+      <span aria-hidden="true"> · </span>
+      <a href={support} aria-label="Email us about privacy">Email us</a>
+    </header>
+
+    <div class="document-sections">
+      <section>
+        <h2>Your library and backups</h2>
+        <div>
+          <p>Toolkit saves patches, patterns, sets and backups on your Mac. You choose which files to open or export. For setup, backup or restore, it asks for access to the JD-08 drive and remembers that permission for next time.</p>
+          <p>Audio and MIDI preferences, device session logs and recovery copies also stay on your Mac. The app does not upload your library, MIDI messages or recordings to Misery &amp; Company Ltd.</p>
+        </div>
+      </section>
+      <section>
+        <h2>Audio input and previews</h2>
+        <div>
+          <p>Toolkit requests macOS Microphone permission so it can play and record the audio input you select. The <strong>Automatic</strong> input uses the JD-08’s USB audio.</p>
+          <p>By default, Toolkit saves completed patch previews on your Mac for offline playback. In <strong>Settings → Previews</strong>, you can turn off automatic saving or choose <strong>Clear Preview Cache</strong> to delete saved audio and keep your patches.</p>
+        </div>
+      </section>
+      <section>
+        <h2>App Store and TestFlight</h2>
+        <div>
+          <p>If you use the Mac App Store, Apple processes account, purchase and download information under its <a href="https://www.apple.com/legal/privacy/data/en/app-store/">App Store privacy policy</a>.</p>
+          <p>If you use a TestFlight build, Apple automatically shares usage and crash information with us, along with any feedback you submit. Apple describes what’s included in <a href="https://www.apple.com/legal/privacy/data/en/test-flight/">TestFlight &amp; Privacy</a>.</p>
+        </div>
+      </section>
+    </div>
+  </article>
+</Page>
